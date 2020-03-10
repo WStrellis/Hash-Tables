@@ -83,7 +83,27 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # hash the input key
+        hashed_key = self._hash(key)
+        # get index
+        index = self._hash_mod(hashed_key)
+        # if there is one item at the specified index delete it
+        storage_item = self.storage[index]
+
+        if storage_item:
+            # if there are multiple items at the index find the one with the matching key and delete it from the chain
+            while storage_item:
+                if storage_item.key == key:
+                    if storage_item.next:
+                        self.storage[index] = storage_item.next
+                    else:
+                        self.storage[index] = None
+                # get next node if key doesn't match
+                storage_item = storage_item.next
+
+        # if the key was not found return error message
+        else:
+            print(f'ERROR: key:{key} does not exist')
 
     def retrieve(self, key):
         '''
@@ -134,6 +154,9 @@ if __name__ == "__main__":
     ht.insert("line_1", "Tiny hash table")
     ht.insert("line_1", "knuckle sandwich")
     print(ht.retrieve('line_1'))
+    print(ht.storage)
+    ht.remove('line_1')
+    print(ht.storage)
     # Test resizing
     # old_capacity = len(ht.storage)
     # ht.resize()
