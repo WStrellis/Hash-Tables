@@ -94,10 +94,7 @@ class HashTable:
             # if there are multiple items at the index find the one with the matching key and delete it from the chain
             while storage_item:
                 if storage_item.key == key:
-                    if storage_item.next:
-                        self.storage[index] = storage_item.next
-                    else:
-                        self.storage[index] = None
+                    self.storage[index] = storage_item.next if storage_item.next else None
                 # get next node if key doesn't match
                 storage_item = storage_item.next
 
